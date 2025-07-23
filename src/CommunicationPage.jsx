@@ -359,7 +359,7 @@ const CommunicationPage = () => {
                                         <div className="text-center">
                                             <div className="w-full h-16 md:h-20 flex items-center justify-center mx-auto mb-2 md:mb-4">
                                                 <img
-                                                    src={`src/assets/${partner.name.toLowerCase()}.png`}
+                                                    src={`/${partner.name.toLowerCase()}.png`}
                                                     alt={partner.name}
                                                     className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
                                                 />

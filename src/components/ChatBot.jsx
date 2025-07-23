@@ -104,7 +104,7 @@ const MetroLinkChatbot = () => {
       {/* Chat Interface */}
       {isOpen && (
         <div
-          className={`fixed bottom-6 right-6 z-40 transition-all duration-300 ${isMinimized ? "w-80 h-25" : "w-80 h-[500px] md:w-96 md:h-[600px]"
+          className={`fixed bottom-6 right-6 z-40 transition-all duration-300 ${isMinimized ? "w-80 h-25" : "w-80 h-[500px] md:w-96 md:h-[550px]"
             }`}
         >
           <div className="bg-gray-900 rounded-3xl shadow-2xl border border-gray-700 h-full flex flex-col overflow-hidden backdrop-blur-sm">

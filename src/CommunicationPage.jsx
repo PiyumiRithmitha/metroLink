@@ -107,7 +107,7 @@ const CommunicationPage = () => {
                         <div className="flex items-center">
                             <div>
                                 <img
-                                    src="src/assets/metrologo.png"
+                                    src="/metrologo.png"
                                     alt="Your Company Name"
                                     className="h-15"
                                 />

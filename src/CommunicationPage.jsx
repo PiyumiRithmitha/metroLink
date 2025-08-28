@@ -178,34 +178,22 @@ const CommunicationPage = () => {
                 </div>
 
                 {/* Desktop Sidebar Navigation - Hidden on mobile */}
-                <div className="hidden md:block w-80 bg-white shadow-xl border-r border-gray-100 flex-shrink-0">
-                    <div className="p-6 border-b border-gray-100">
-                        <div className="flex items-center space-x-3">
-                            <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
-                                <Network className="w-6 h-6 text-white" />
-                            </div>
-                            <h2 className="text-xl font-bold text-gray-900">Services</h2>
-                        </div>
-                    </div>
-
-                    <nav className="p-4 space-y-2">
+                <div className="hidden md:block w-72 bg-gray-50 flex-shrink-0">
+                    <nav className="py-8 px-6 space-y-1">
                         {navigationItems.map((item, index) => (
                             <div
                                 key={index}
-                                className={`group flex items-center justify-between p-4 rounded-xl cursor-pointer transition-all duration-300 hover:scale-[1.02] ${item.active
-                                    ? 'bg-gradient-to-r from-blue-50 to-purple-50 text-blue-600 shadow-lg border border-blue-100'
-                                    : 'text-gray-600 hover:bg-gray-50 hover:shadow-md'
+                                className={`group flex items-center justify-between py-4 px-4 cursor-pointer transition-all duration-300 ${item.active
+                                    ? 'text-blue-600 font-semibold border-r-3 bg-blue-50'
+                                    : 'text-gray-700 hover:text-blue-600 hover:bg-gray-100'
                                     }`}
+                                style={{
+                                    borderRight: item.active ? '3px solid rgb(11, 113, 225)' : '3px solid transparent'
+                                }}
                             >
-                                <div className="flex items-center space-x-3">
-                                    <div className={`p-2 rounded-lg transition-colors ${item.active ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 group-hover:bg-gray-200'
-                                        }`}>
-                                        {item.icon}
-                                    </div>
-                                    <span className="font-medium">{item.name}</span>
-                                </div>
+                                <span className="text-base">{item.name}</span>
                                 <ChevronRight
-                                    className={`w-5 h-5 transition-all duration-300 ${item.active ? 'rotate-90 text-blue-600' : 'text-gray-400 group-hover:text-gray-600'
+                                    className={`w-4 h-4 transition-all duration-300 ${item.active ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600'
                                         }`}
                                 />
                             </div>

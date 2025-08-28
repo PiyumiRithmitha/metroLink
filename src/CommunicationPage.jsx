@@ -116,7 +116,7 @@ const CommunicationPage = () => {
                     </div>
 
                     {/* Navigation Menu */}
-                    <nav className="hidden md:flex items-center space-x-8">
+                    <nav className="hidden md:flex items-center mr-7 space-x-8">
                         {[
                             { name: 'HOME', active: false },
                             { name: 'ABOUT', active: false },

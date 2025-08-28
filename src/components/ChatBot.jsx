@@ -32,30 +32,76 @@ const MetroLinkChatbot = () => {
     }
   }, [isOpen, messages.length]);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (inputValue.trim()) {
-      const newMessage = {
+      const userMessage = {
         id: Date.now(),
         text: inputValue,
         sender: "user",
         timestamp: new Date(),
       };
 
-      setMessages((prev) => [...prev, newMessage]);
+      setMessages((prev) => [...prev, userMessage]);
+      const currentMessage = inputValue;
       setInputValue("");
       setIsTyping(true);
 
-      // Simulate bot response with typing indicator
-      setTimeout(() => {
+      try {
+        // Send message to Rasa chatbot
+        const response = await fetch('http://localhost:5005/webhooks/rest/webhook', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            sender: "user",
+            message: currentMessage
+          })
+        });
+
+        if (response.ok) {
+          const botResponses = await response.json();
+          setIsTyping(false);
+
+          // Handle multiple responses from Rasa (if any)
+          if (botResponses && botResponses.length > 0) {
+            botResponses.forEach((botResponse, index) => {
+              setTimeout(() => {
+                const botMessage = {
+                  id: Date.now() + index + 1,
+                  text: botResponse.text || "I'm sorry, I didn't understand that.",
+                  sender: "bot",
+                  timestamp: new Date(),
+                };
+                setMessages((prev) => [...prev, botMessage]);
+              }, index * 500); // Stagger multiple responses
+            });
+          } else {
+            // Fallback if no response from Rasa
+            const fallbackMessage = {
+              id: Date.now() + 1,
+              text: "I'm sorry, I'm having trouble understanding. Could you please rephrase your question?",
+              sender: "bot",
+              timestamp: new Date(),
+            };
+            setMessages((prev) => [...prev, fallbackMessage]);
+          }
+        } else {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+      } catch (error) {
+        console.error('Error sending message to Rasa:', error);
         setIsTyping(false);
-        const botResponse = {
+
+        // Show error message to user
+        const errorMessage = {
           id: Date.now() + 1,
-          text: "Thank you for your message! I'm here to help you with any questions about Metropolitan.",
+          text: "I'm currently experiencing technical difficulties. Please try again in a moment.",
           sender: "bot",
           timestamp: new Date(),
         };
-        setMessages((prev) => [...prev, botResponse]);
-      }, 2000);
+        setMessages((prev) => [...prev, errorMessage]);
+      }
     }
   };
 

@@ -11,8 +11,11 @@ const MetroLinkChatbot = () => {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
 
-  // Rasa API endpoint - Updated to use your EC2 instance
-  const RASA_API_URL = 'http://13.48.135.239:5005/webhooks/rest/webhook';
+  // Using Netlify proxy - this will work!
+  const RASA_API_URL = '/api/webhooks/rest/webhook';
+
+  // Alternative: If you can't set up HTTPS immediately, you can use a CORS proxy (not recommended for production)
+  // const RASA_API_URL = 'https://cors-anywhere.herokuapp.com/http://13.48.135.239:5005/webhooks/rest/webhook';
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -50,11 +53,13 @@ const MetroLinkChatbot = () => {
       setIsTyping(true);
 
       try {
-        // Send message to Rasa chatbot on EC2
+        // Send message to Rasa chatbot with improved error handling
         const response = await fetch(RASA_API_URL, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            // Add CORS headers if needed
+            'Access-Control-Allow-Origin': '*',
           },
           body: JSON.stringify({
             sender: "user",
@@ -96,10 +101,19 @@ const MetroLinkChatbot = () => {
         console.error('Error sending message to Rasa:', error);
         setIsTyping(false);
 
+        let errorText = "I'm currently experiencing technical difficulties. Please try again in a moment.";
+
+        // Provide more specific error messages
+        if (error.message.includes('Failed to fetch')) {
+          errorText = "Unable to connect to the chat server. Please check if the server is running and accessible via HTTPS.";
+        } else if (error.message.includes('CORS')) {
+          errorText = "There's a CORS policy issue. The server needs to allow requests from this domain.";
+        }
+
         // Show error message to user
         const errorMessage = {
           id: Date.now() + 1,
-          text: "I'm currently experiencing technical difficulties. Please try again in a moment.",
+          text: errorText,
           sender: "bot",
           timestamp: new Date(),
         };
@@ -278,7 +292,7 @@ const MetroLinkChatbot = () => {
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                         onKeyDown={handleKeyPress}
-                        placeholder="Type your message to NeuroLink..."
+                        placeholder="Type your message to MetroLink..."
                         rows={2}
                         className="w-full px-4 py-4 border border-gray-600 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#051923] focus:border-transparent text-sm resize-none bg-gray-800 text-gray-100 placeholder-gray-400 hover:bg-gray-750 transition-colors"
                         style={{ minHeight: "60px", maxHeight: "150px" }}

@@ -11,6 +11,9 @@ const MetroLinkChatbot = () => {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
 
+  // Rasa API endpoint - Updated to use your EC2 instance
+  const RASA_API_URL = 'http://13.48.135.239:5005/webhooks/rest/webhook';
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -47,8 +50,8 @@ const MetroLinkChatbot = () => {
       setIsTyping(true);
 
       try {
-        // Send message to Rasa chatbot
-        const response = await fetch('http://localhost:5005/webhooks/rest/webhook', {
+        // Send message to Rasa chatbot on EC2
+        const response = await fetch(RASA_API_URL, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

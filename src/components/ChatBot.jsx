@@ -231,7 +231,7 @@ const MetroLinkChatbot = () => {
                         }`}
                     >
                       {message.sender === "bot" && (
-                        <div className="w-20 h-8 bg-gradient-to-br from-[#051923] to-[#0a2a3a] rounded-full flex items-center justify-center mr-3 mt-1">
+                        <div className="w-8 h-8 bg-gradient-to-br from-[#051923] to-[#0a2a3a] rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
                           <Bot size={16} className="text-white" />
                         </div>
                       )}
@@ -262,7 +262,7 @@ const MetroLinkChatbot = () => {
                   {/* Typing Indicator */}
                   {isTyping && (
                     <div className="flex justify-start mb-4">
-                      <div className="w-8 h-8 bg-gradient-to-br from-[#051923] to-[#0a2a3a] rounded-full flex items-center justify-center mr-3">
+                      <div className="w-8 h-8 bg-gradient-to-br from-[#051923] to-[#0a2a3a] rounded-full flex items-center justify-center mr-3 flex-shrink-0">
                         <Bot size={16} className="text-white" />
                       </div>
                       <div className="bg-gray-800 border border-gray-600 rounded-2xl rounded-bl-md px-4 py-3 shadow-sm">

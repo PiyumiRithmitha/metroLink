@@ -14,11 +14,11 @@ const MetroLinkChatbot = () => {
   // Using Netlify proxy - this will work!
 //  const RASA_API_URL = '/api/webhooks/rest/webhook';
 //  const RASA_API_URL = 'http://13.48.135.239:5005/webhooks/rest/webhook';
-  const RASA_API_URL = 'http://51.20.71.224:5005/webhooks/rest/webhook';
+  //const RASA_API_URL = 'http://51.20.71.224:5005/webhooks/rest/webhook';
 
 
   // Alternative: If you can't set up HTTPS immediately, you can use a CORS proxy (not recommended for production)
-  // const RASA_API_URL = 'https://cors-anywhere.herokuapp.com/http://13.48.135.239:5005/webhooks/rest/webhook';
+   const RASA_API_URL = 'https://cors-anywhere.herokuapp.com/http://51.20.71.224:5005/webhooks/rest/webhook';
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
